@@ -1,112 +1,406 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { ArrowUpRight, Check, ChevronDown, Menu, X } from 'lucide-react'
+import { useState } from "react";
+import { ArrowUpRight, Check, ChevronDown, Menu, X } from "lucide-react";
 
 const profile = {
-  name: 'Nombre Apellido',
-  role: 'Abogada',
-  city: 'Córdoba, Argentina',
-  email: 'hola@fojacero.com.ar',
-  phone: '+54 9 351 000 0000',
-  image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=85',
-  portrait: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&w=1000&q=85',
-}
+  name: "Yamina Isoardi",
+  role: "Abogada",
+  city: "Victorica, La Pampa, Argentina",
+  email: "hola@fojacero.com.ar",
+  phone: "+54 9 351 000 0000",
+  image:
+    "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=85",
+  portrait:
+    "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&w=1000&q=85",
+};
 
 const timeline = [
-  { year: '20XX', title: 'Abogacía', detail: 'Completar universidad y título de grado.' },
-  { year: '20XX', title: 'Especialización', detail: 'Agregar posgrado o especialización.' },
-  { year: '20XX', title: 'Experiencia profesional', detail: 'Agregar estudio, equipo o práctica profesional.' },
-  { year: 'Actualidad', title: 'Foja Cero', detail: 'Atención personalizada y acompañamiento jurídico.' },
-]
+  {
+    year: "2018",
+    title: "Abogacía",
+    detail: "Completar universidad y título de grado.",
+  },
+  {
+    year: "2018",
+    title: "Especialización",
+    detail: "Agregar posgrado o especialización.",
+  },
+  {
+    year: "2018",
+    title: "Experiencia profesional",
+    detail: "Agregar estudio, equipo o práctica profesional.",
+  },
+  {
+    year: "Actualidad",
+    title: "Foja Cero",
+    detail: "Atención personalizada y acompañamiento jurídico.",
+  },
+];
 
 const specialties = [
-  ['01', 'Derecho civil', 'Acompañamiento en vínculos, obligaciones y situaciones de la vida cotidiana.'],
-  ['02', 'Derecho de familia', 'Una mirada clara y cuidadosa para momentos que necesitan especial atención.'],
-  ['03', 'Derecho laboral', 'Orientación para comprender derechos, acuerdos y próximos pasos.'],
-  ['04', 'Sucesiones', 'Orden y sensibilidad para transitar procesos familiares importantes.'],
-  ['05', 'Contratos', 'Revisión y redacción de acuerdos pensados para cada situación.'],
-  ['06', 'Asesoramiento jurídico', 'Un espacio para conversar, evaluar alternativas y decidir con información.'],
-]
+  [
+    "01",
+    "Derecho civil",
+    "Acompañamiento en vínculos, obligaciones y situaciones de la vida cotidiana.",
+  ],
+  [
+    "02",
+    "Derecho de familia",
+    "Una mirada clara y cuidadosa para momentos que necesitan especial atención.",
+  ],
+  [
+    "03",
+    "Derecho laboral",
+    "Orientación para comprender derechos, acuerdos y próximos pasos.",
+  ],
+  [
+    "04",
+    "Sucesiones",
+    "Orden y sensibilidad para transitar procesos familiares importantes.",
+  ],
+  [
+    "05",
+    "Contratos",
+    "Revisión y redacción de acuerdos pensados para cada situación.",
+  ],
+  [
+    "06",
+    "Asesoramiento jurídico",
+    "Un espacio para conversar, evaluar alternativas y decidir con información.",
+  ],
+];
 
 export default function Page() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [sent, setSent] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const closeMenu = () => setMenuOpen(false)
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <main className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#inicio" onClick={closeMenu} aria-label="Foja Cero, inicio">
+        <a
+          className="brand"
+          href="#inicio"
+          onClick={closeMenu}
+          aria-label="Foja Cero, inicio"
+        >
           <span className="brand-mark">F</span>
           <span>Foja Cero</span>
         </a>
-        <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}>
+        <button
+          className="menu-toggle"
+          type="button"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+        >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
-        <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Navegación principal">
-          {['Sobre mí', 'Formación', 'Especialidades', 'Contacto'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} onClick={closeMenu}>{item}</a>
-          ))}
-          <a className="nav-cta" href="#contacto" onClick={closeMenu}>Hablemos <ArrowUpRight size={15} /></a>
+        <nav
+          className={menuOpen ? "main-nav is-open" : "main-nav"}
+          aria-label="Navegación principal"
+        >
+          {["Sobre mí", "Formación", "Especialidades", "Contacto"].map(
+            (item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase().replace(" ", "-")}`}
+                onClick={closeMenu}
+              >
+                {item}
+              </a>
+            ),
+          )}
+          <a className="nav-cta" href="#contacto" onClick={closeMenu}>
+            Hablemos <ArrowUpRight size={15} />
+          </a>
         </nav>
       </header>
 
       <section id="inicio" className="hero section-pad">
         <div className="hero-copy reveal-up">
-          <p className="eyebrow"><span /> Estudio jurídico independiente</p>
-          <h1>El derecho, <em>con otra mirada.</em></h1>
-          <p className="hero-lede">Soy {profile.name}, abogada. En Foja Cero creo espacios de confianza para entender cada situación y encontrar el camino más claro.</p>
+          <p className="eyebrow">
+            <span /> Estudio jurídico independiente
+          </p>
+          <h1>
+            El derecho, <em>con otra mirada.</em>
+          </h1>
+          <p className="hero-lede">
+            Soy {profile.name}, abogada. En Foja Cero creo espacios de confianza
+            para entender cada situación y encontrar el camino más claro.
+          </p>
           <div className="button-row">
-            <a href="#formacion" className="button button-primary">Conocé mi trayectoria <ArrowUpRight size={17} /></a>
-            <a href="#contacto" className="button button-text">Realizar una consulta <span>→</span></a>
+            <a href="#formacion" className="button button-primary">
+              Conocé mi trayectoria <ArrowUpRight size={17} />
+            </a>
+            <a href="#contacto" className="button button-text">
+              Realizar una consulta <span>→</span>
+            </a>
           </div>
-          <p className="hero-location">{profile.city} <span>·</span> Atención presencial y online</p>
+          <p className="hero-location">
+            {profile.city} <span>·</span> Atención presencial y online
+          </p>
         </div>
         <div className="hero-image-wrap reveal-up delay-1">
-          <img src={profile.image} alt="Fotografía profesional provisional de la abogada" className="hero-image" />
-          <div className="image-caption"><span>Foja Cero</span><span>Desde 20XX</span></div>
-          <div className="hero-stamp">FC<span>°</span></div>
+          <img
+            src={profile.image}
+            alt="Fotografía profesional provisional de la abogada"
+            className="hero-image"
+          />
+          <div className="image-caption">
+            <span>Foja Cero</span>
+            <span>Desde 2018</span>
+          </div>
+          <div className="hero-stamp">
+            FC<span>°</span>
+          </div>
         </div>
       </section>
 
       <section id="sobre-mí" className="about section-pad section-dark">
-        <div className="section-label light-label">01 <span>Sobre mí</span></div>
+        <div className="section-label light-label">
+          01 <span>Sobre mí</span>
+        </div>
         <div className="about-grid">
-          <div className="about-image-wrap"><img src={profile.portrait} alt="Retrato profesional provisional" className="about-image" /><span className="vertical-note">PERSONA · ESCUCHA · DERECHO</span></div>
-          <div className="about-copy"><p className="eyebrow copper"><span /> Una práctica más humana</p><h2>Antes que un caso,<br /><em>una persona.</em></h2><p>Creo que el derecho puede ser riguroso sin perder cercanía. Mi trabajo empieza en la escucha: en entender qué te preocupa, qué necesitás y qué alternativas existen.</p><p>Foja Cero nace para ofrecer un acompañamiento atento, claro y personalizado. Sin fórmulas, sin promesas vacías: con información para que puedas tomar decisiones con tranquilidad.</p><a href="#contacto" className="inline-link">Conocé mi forma de trabajar <ArrowUpRight size={16} /></a></div>
+          <div className="about-image-wrap">
+            <img
+              src={profile.portrait}
+              alt="Retrato profesional provisional"
+              className="about-image"
+            />
+            <span className="vertical-note">PERSONA · ESCUCHA · DERECHO</span>
+          </div>
+          <div className="about-copy">
+            <p className="eyebrow copper">
+              <span /> Una práctica más humana
+            </p>
+            <h2>
+              Antes que un caso,
+              <br />
+              <em>una persona.</em>
+            </h2>
+            <p>
+              Creo que el derecho puede ser riguroso sin perder cercanía. Mi
+              trabajo empieza en la escucha: en entender qué te preocupa, qué
+              necesitás y qué alternativas existen.
+            </p>
+            <p>
+              Foja Cero nace para ofrecer un acompañamiento atento, claro y
+              personalizado. Sin fórmulas, sin promesas vacías: con información
+              para que puedas tomar decisiones con tranquilidad.
+            </p>
+            <a href="#contacto" className="inline-link">
+              Conocé mi forma de trabajar <ArrowUpRight size={16} />
+            </a>
+          </div>
         </div>
       </section>
 
       <section id="formación" className="timeline-section section-pad">
-        <div className="section-label">02 <span>Formación y trayectoria</span></div>
-        <div className="section-intro"><h2>Un recorrido en <em>construcción.</em></h2><p>La formación es un camino que se transforma con cada experiencia. Estos datos son editables y están listos para completar.</p></div>
-        <div className="timeline">{timeline.map((item, index) => <div className="timeline-item" key={item.title}><div className="timeline-year">{item.year}</div><div className="timeline-dot" /><div className="timeline-content"><span className="timeline-index">0{index + 1}</span><h3>{item.title}</h3><p>{item.detail}</p></div></div>)}</div>
-        <div className="credentials"><span>Matrícula profesional: completar</span><span>Colegio / asociaciones: agregar</span></div>
+        <div className="section-label">
+          02 <span>Formación y trayectoria</span>
+        </div>
+        <div className="section-intro">
+          <h2>
+            Un recorrido en <em>construcción.</em>
+          </h2>
+          <p>
+            La formación es un camino que se transforma con cada experiencia.
+            Estos datos son editables y están listos para completar.
+          </p>
+        </div>
+        <div className="timeline">
+          {timeline.map((item, index) => (
+            <div className="timeline-item" key={item.title}>
+              <div className="timeline-year">{item.year}</div>
+              <div className="timeline-dot" />
+              <div className="timeline-content">
+                <span className="timeline-index">0{index + 1}</span>
+                <h3>{item.title}</h3>
+                <p>{item.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="credentials">
+          <span>Matrícula profesional: completar</span>
+          <span>Colegio / asociaciones: agregar</span>
+        </div>
       </section>
 
-      <section id="especialidades" className="specialties section-pad section-paper">
-        <div className="section-label">03 <span>Especialidades</span></div>
-        <div className="section-intro"><h2>Lo que hacemos,<br /><em>con claridad.</em></h2><p>Un primer acercamiento para entender cómo puedo acompañarte. Cada consulta merece una mirada propia.</p></div>
-        <div className="specialty-grid">{specialties.map(([number, title, text]) => <article className="specialty-card" key={title}><span className="card-number">{number}</span><ChevronDown size={19} className="card-arrow" /><h3>{title}</h3><p>{text}</p></article>)}</div>
+      <section
+        id="especialidades"
+        className="specialties section-pad section-paper"
+      >
+        <div className="section-label">
+          03 <span>Especialidades</span>
+        </div>
+        <div className="section-intro">
+          <h2>
+            Lo que hacemos,
+            <br />
+            <em>con claridad.</em>
+          </h2>
+          <p>
+            Un primer acercamiento para entender cómo puedo acompañarte. Cada
+            consulta merece una mirada propia.
+          </p>
+        </div>
+        <div className="specialty-grid">
+          {specialties.map(([number, title, text]) => (
+            <article className="specialty-card" key={title}>
+              <span className="card-number">{number}</span>
+              <ChevronDown size={19} className="card-arrow" />
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="process section-pad">
-        <div className="section-label">04 <span>Forma de trabajo</span></div>
-        <div className="process-head"><h2>Un proceso simple,<br /><em>paso a paso.</em></h2><p>La claridad también es una forma de cuidado. Te acompaño para que sepas dónde estás y hacia dónde podés ir.</p></div>
-        <div className="process-list">{['Primera consulta', 'Evaluación del caso', 'Definición de la estrategia', 'Acompañamiento y seguimiento'].map((step, i) => <div className="process-step" key={step}><span>0{i + 1}</span><h3>{step}</h3><ArrowUpRight size={18} /></div>)}</div>
+        <div className="section-label">
+          04 <span>Forma de trabajo</span>
+        </div>
+        <div className="process-head">
+          <h2>
+            Un proceso simple,
+            <br />
+            <em>paso a paso.</em>
+          </h2>
+          <p>
+            La claridad también es una forma de cuidado. Te acompaño para que
+            sepas dónde estás y hacia dónde podés ir.
+          </p>
+        </div>
+        <div className="process-list">
+          {[
+            "Primera consulta",
+            "Evaluación del caso",
+            "Definición de la estrategia",
+            "Acompañamiento y seguimiento",
+          ].map((step, i) => (
+            <div className="process-step" key={step}>
+              <span>0{i + 1}</span>
+              <h3>{step}</h3>
+              <ArrowUpRight size={18} />
+            </div>
+          ))}
+        </div>
       </section>
 
       <section id="contacto" className="contact section-pad section-dark">
-        <div className="section-label light-label">05 <span>Contacto</span></div>
-        <div className="contact-grid"><div className="contact-copy"><p className="eyebrow copper"><span /> Abramos la conversación</p><h2>Hablemos sobre<br /><em>tu consulta.</em></h2><p>Contame brevemente qué necesitás. Voy a leer tu mensaje y responderte para coordinar un primer encuentro.</p><div className="contact-details"><a href={`mailto:${profile.email}`}>{profile.email}</a><a href={`tel:${profile.phone}`}>{profile.phone}</a><span>{profile.city}</span></div></div>
-          <form className="contact-form" onSubmit={(event) => { event.preventDefault(); setSent(true) }} aria-label="Formulario de consulta">
-            {sent ? <div className="success-state"><span className="success-icon"><Check size={22} /></span><h3>Mensaje recibido.</h3><p>Gracias por escribirme. Te voy a responder a la brevedad.</p><button type="button" className="button button-outline" onClick={() => setSent(false)}>Enviar otra consulta</button></div> : <><label>Nombre y apellido<input required name="name" placeholder="¿Cómo te llamás?" /></label><div className="form-row"><label>Correo electrónico<input required type="email" name="email" placeholder="tu@email.com" /></label><label>Teléfono<input name="phone" placeholder="Tu teléfono" /></label></div><label>Mensaje<textarea required name="message" rows={4} placeholder="¿En qué puedo ayudarte?" /></label><button className="button button-copper" type="submit">Enviar consulta <ArrowUpRight size={17} /></button><p className="form-note">Al enviar esta consulta, acepto que Foja Cero utilice mis datos para responderme.</p></>}
-          </form></div>
+        <div className="section-label light-label">
+          05 <span>Contacto</span>
+        </div>
+        <div className="contact-grid">
+          <div className="contact-copy">
+            <p className="eyebrow copper">
+              <span /> Abramos la conversación
+            </p>
+            <h2>
+              Hablemos sobre
+              <br />
+              <em>tu consulta.</em>
+            </h2>
+            <p>
+              Contame brevemente qué necesitás. Voy a leer tu mensaje y
+              responderte para coordinar un primer encuentro.
+            </p>
+            <div className="contact-details">
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <a href={`tel:${profile.phone}`}>{profile.phone}</a>
+              <span>{profile.city}</span>
+            </div>
+          </div>
+          <form
+            className="contact-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              setSent(true);
+            }}
+            aria-label="Formulario de consulta"
+          >
+            {sent ? (
+              <div className="success-state">
+                <span className="success-icon">
+                  <Check size={22} />
+                </span>
+                <h3>Mensaje recibido.</h3>
+                <p>Gracias por escribirme. Te voy a responder a la brevedad.</p>
+                <button
+                  type="button"
+                  className="button button-outline"
+                  onClick={() => setSent(false)}
+                >
+                  Enviar otra consulta
+                </button>
+              </div>
+            ) : (
+              <>
+                <label>
+                  Nombre y apellido
+                  <input required name="name" placeholder="¿Cómo te llamás?" />
+                </label>
+                <div className="form-row">
+                  <label>
+                    Correo electrónico
+                    <input
+                      required
+                      type="email"
+                      name="email"
+                      placeholder="tu@email.com"
+                    />
+                  </label>
+                  <label>
+                    Teléfono
+                    <input name="phone" placeholder="Tu teléfono" />
+                  </label>
+                </div>
+                <label>
+                  Mensaje
+                  <textarea
+                    required
+                    name="message"
+                    rows={4}
+                    placeholder="¿En qué puedo ayudarte?"
+                  />
+                </label>
+                <button className="button button-copper" type="submit">
+                  Enviar consulta <ArrowUpRight size={17} />
+                </button>
+                <p className="form-note">
+                  Al enviar esta consulta, acepto que Foja Cero utilice mis
+                  datos para responderme.
+                </p>
+              </>
+            )}
+          </form>
+        </div>
       </section>
 
-      <footer className="footer"><div className="footer-brand"><span className="brand-mark">F</span><span>Foja Cero</span></div><p>{profile.name}<br />Abogada · {profile.city}</p><div className="footer-links"><a href={`mailto:${profile.email}`}>{profile.email}</a><a href="#">Instagram ↗</a><a href="#">LinkedIn ↗</a></div><p className="footer-legal">Matrícula profesional: completar<br />© 20XX Foja Cero</p></footer>
+      <footer className="footer">
+        <div className="footer-brand">
+          <span className="brand-mark">F</span>
+          <span>Foja Cero</span>
+        </div>
+        <p>
+          {profile.name}
+          <br />
+          Abogada · {profile.city}
+        </p>
+        <div className="footer-links">
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <a href="#">Instagram ↗</a>
+          <a href="#">LinkedIn ↗</a>
+        </div>
+        <p className="footer-legal">
+          Matrícula profesional: completar
+          <br />© 20XX Foja Cero
+        </p>
+      </footer>
     </main>
-  )
+  );
 }
