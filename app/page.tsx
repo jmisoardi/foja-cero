@@ -208,7 +208,7 @@ export default function Page() {
           </h2>
           <p>
             La formación es un camino que se transforma con cada experiencia.
-            Estos datos son editables y están listos para completar.
+              Estos datos son editables y están listos para completar.
           </p>
         </div>
         <div className="timeline">
@@ -225,8 +225,10 @@ export default function Page() {
           ))}
         </div>
         <div className="credentials">
-          <span>Matrícula profesional: completar</span>
-          <span>Colegio / asociaciones: agregar</span>
+          <span>Universidad Nacional de La Pampa (UNLPam) <br /> Matrícula profesional: 
+            Abogado: T° XII F° 26, 
+            Procurador: T° VII F° 40.
+          </span>
         </div>
       </section>
 
