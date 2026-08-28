@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUpRight, Check, ChevronDown, Menu, X } from "lucide-react";
+import { FieldDescription } from "@base-ui/react";
 
 const profile = {
   name: "Yamina Isoardi",
@@ -102,7 +103,7 @@ export default function Page() {
           className={menuOpen ? "main-nav is-open" : "main-nav"}
           aria-label="Navegación principal"
         >
-          {["Sobre mí", "Formación", "Especialidades", "Contacto"].map(
+          {["Sobre mí", "Formación", "Especialidades", "Contacto" /* "Hablemos" */].map(
             (item) => (
               <a
                 key={item}
@@ -224,12 +225,12 @@ export default function Page() {
             </div>
           ))}
         </div>
-        <div className="credentials">
+        {/* <div className="credentials">
           <span>Universidad Nacional de La Pampa (UNLPam) <br /> Matrícula profesional: 
             Abogado: T° XII F° 26, 
             Procurador: T° VII F° 40.
           </span>
-        </div>
+        </div> */}
       </section>
 
       <section
@@ -277,7 +278,7 @@ export default function Page() {
             sepas dónde estás y hacia dónde podés ir.
           </p>
         </div>
-        <div className="process-list">
+       {/*  <div className="process-list">
           {[
             "Primera consulta",
             "Evaluación del caso",
@@ -290,10 +291,51 @@ export default function Page() {
               <ArrowUpRight size={18} />
             </div>
           ))}
+        </div> */}
+        <div className="process-list">
+          {[
+            {
+              title: "Primera consulta",
+              description:
+                "En este primer encuentro vas a poder contarme tu situación, plantear tus dudas y compartir la información que consideres importante. La idea es conocer el caso y brindarte una orientación inicial clara.",
+            },
+            {
+              title: "Evaluación del caso",
+              description:
+                "Voy a analizar la información y la documentación disponible para identificar las alternativas legales posibles y explicarte los pasos que podrían seguirse.",
+            },
+            {
+              title: "Definición de la estrategia",
+              description:
+                "Una vez evaluado el caso, definiremos el camino más adecuado según tus necesidades y objetivos, considerando las distintas opciones disponibles.",
+            },
+            {
+              title: "Acompañamiento y seguimiento",
+              description:
+                "Durante todo el proceso vas a recibir información clara sobre el avance del caso y los pasos siguientes. También podrás realizar las consultas que necesites en cada etapa.",
+            },
+          ].map((step, index) => (
+            <details className="process-item" key={step.title}>
+              <summary className="process-step">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+
+                <h3>{step.title}</h3>
+
+                <ChevronDown
+                  className="process-arrow"
+                  size={18}
+                  aria-hidden="true"
+                />
+              </summary>
+
+              <p className="process-description">{step.description}</p>
+            </details>
+          ))}
         </div>
+         
       </section>
 
-      <section id="contacto" className="contact section-pad section-dark">
+      <section id= "Hablemos" className="contact section-pad section-dark">
         <div className="section-label light-label">
           05 <span>Contacto</span>
         </div>
@@ -308,12 +350,15 @@ export default function Page() {
               <em>tu consulta.</em>
             </h2>
             <p>
-              Contame brevemente qué necesitás. Voy a leer tu mensaje y
-              responderte para coordinar un primer encuentro.
+              {/* Contame brevemente qué necesitás. Voy a leer tu mensaje y
+              responderte para coordinar un primer encuentro. */}
+              Contame brevemente en qué puedo ayudarte. Voy a leer tu mensaje y responderte para que coordinemos un primer encuentro. <br />
+              El horario de atención es de lunes a viernes, de 8:00 a 13:00 y de 16:30 a 20:00; y los sábados, de 9:00 a 13:00.
             </p>
             <div className="contact-details">
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
-              <a href={`tel:${profile.phone}`}>{profile.phone}</a>
+              {/* <a href={`mailto:${profile.email}`}>{profile.email}</a> */}
+              {/* <a href={`tel:${profile.phone}`}>{profile.phone}</a> */}
+              Calle 17 N° 459
               <span>{profile.city}</span>
             </div>
           </div>
@@ -384,6 +429,7 @@ export default function Page() {
       </section>
 
       <footer className="footer">
+       
         <div className="footer-brand">
           <span className="brand-mark">F</span>
           <span>Foja Cero</span>
@@ -391,18 +437,28 @@ export default function Page() {
         <p>
           {profile.name}
           <br />
-          Abogada · {profile.city}
+          Abogada {/* · {profile.city} */}
         </p>
-        <div className="footer-links">
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <a href="#">Instagram ↗</a>
-          <a href="#">LinkedIn ↗</a>
-        </div>
         <p className="footer-legal">
-          Matrícula profesional: completar
-          <br />© 20XX Foja Cero
+            Matrícula profesional: Abogado: T° XII F° 26, 
+            Procurador: T° VII F° 40.
         </p>
+        <p className="footer-legal">
+            {profile.city}
+        {/* <div className="footer-links">
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <a href="https://www.instagram.com/fojacero.sj/">Instagram ↗</a>
+          <a href="#">LinkedIn ↗</a>
+        </div> */}
+            <br />© 2026 Foja Cero
+        </p>
+        <div>
+        </div>
+
+
+        
       </footer>
+          
     </main>
   );
 }

@@ -9,7 +9,6 @@ const sans = DM_Sans({ subsets: ['latin'], variable: '--font-sans-local', weight
 export const metadata: Metadata = {
   title: 'Foja Cero · Estudio jurídico',
   description: 'El derecho, con otra mirada. Presentación profesional de Foja Cero.',
-  generator: 'v0.app',
 }
 
 export const viewport: Viewport = {
