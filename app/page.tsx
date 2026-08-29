@@ -4,12 +4,46 @@ import { useState } from "react";
 import { ArrowUpRight, Check, ChevronDown, Menu, X } from "lucide-react";
 import { FieldDescription } from "@base-ui/react";
 
+const SCROLL_DURATION_MS = 350;
+const SCROLL_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+const smoothScrollTo = (targetId: string) => {
+  const target = document.getElementById(targetId.replace("#", ""));
+  if (!target) return;
+
+  const startY = window.scrollY;
+  const headerOffset = -50;
+  const targetY =
+    target.getBoundingClientRect().top + window.scrollY - headerOffset;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+  const tick = (now: number) => {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
+    const eased = easeOutCubic(progress);
+
+    window.scrollTo({
+      top: startY + distance * eased,
+      behavior: "auto",
+    });
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    }
+  };
+
+  requestAnimationFrame(tick);
+};
+
 const profile = {
-  name: "Yamina Isoardi",
+  name: "Yamila Lujan Isoardi",
   role: "Abogada",
   city: "Victorica, La Pampa, Argentina",
-  email: "hola@fojacero.com.ar",
-  phone: "+54 9 351 000 0000",
+  /* email: "hola@fojacero.com.ar", */
+  /* phone: "+54 9 351 000 0000", */
   image:
     "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=85",
   portrait:
@@ -75,8 +109,26 @@ const specialties = [
 export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [sent, setSent] = useState(false);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const navItems = [
+    { label: "Sobre mí", href: "#sobre-mi" },
+    { label: "Formación", href: "#formacion" },
+    { label: "Especialidades", href: "#especialidades" },
+    { label: "Forma de Trabajo", href: "#formadetrabajo" },
+    { label: "Hablemos", href: "#hablemos" },
+  ];
 
   const closeMenu = () => setMenuOpen(false);
+
+  const handleNavClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    event.preventDefault();
+    closeMenu();
+    smoothScrollTo(href);
+  };
 
   return (
     <main className="site-shell">
@@ -103,20 +155,18 @@ export default function Page() {
           className={menuOpen ? "main-nav is-open" : "main-nav"}
           aria-label="Navegación principal"
         >
-          {["Sobre mí", "Formación", "Especialidades", "Contacto" /* "Hablemos" */].map(
-            (item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(" ", "-")}`}
-                onClick={closeMenu}
-              >
-                {item}
-              </a>
-            ),
-          )}
-          <a className="nav-cta" href="#contacto" onClick={closeMenu}>
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={(event) => handleNavClick(event, item.href)}
+            >
+              {item.label}
+            </a>
+          ))}
+          {/* <a className="nav-cta" href="#hablemos" onClick={closeMenu}>
             Hablemos <ArrowUpRight size={15} />
-          </a>
+          </a> */}
         </nav>
       </header>
 
@@ -126,17 +176,19 @@ export default function Page() {
             <span /> Estudio jurídico independiente
           </p>
           <h1>
-            El derecho, <em>con otra mirada.</em>
+            El Derecho, <em>con otra mirada.</em>
           </h1>
-          <p className="hero-lede">
+          <br />
+          <p /* className="hero-lede" */ className="serif-copy">
             Soy {profile.name}, abogada. En Foja Cero creo espacios de confianza
-            para entender cada situación y encontrar el camino más claro.
+            para entender cada situación y encontrar el camino más claro. <br />
           </p>
+          <br />
           <div className="button-row">
             <a href="#formacion" className="button button-primary">
               Conocé mi trayectoria <ArrowUpRight size={17} />
             </a>
-            <a href="#contacto" className="button button-text">
+            <a href="#hablemos" className="button button-text">
               Realizar una consulta <span>→</span>
             </a>
           </div>
@@ -160,7 +212,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="sobre-mí" className="about section-pad section-dark">
+      <section id="sobre-mi" className="about section-pad section-dark">
         <div className="section-label light-label">
           01 <span>Sobre mí</span>
         </div>
@@ -182,24 +234,28 @@ export default function Page() {
               <br />
               <em>una persona.</em>
             </h2>
-            <p>
-              Creo que el derecho puede ser riguroso sin perder cercanía. Mi
-              trabajo empieza en la escucha: en entender qué te preocupa, qué
-              necesitás y qué alternativas existen.
-            </p>
-            <p>
-              Foja Cero nace para ofrecer un acompañamiento atento, claro y
-              personalizado. Sin fórmulas, sin promesas vacías: con información
-              para que puedas tomar decisiones con tranquilidad.
-            </p>
-            <a href="#contacto" className="inline-link">
+            <br />
+            <div className="serif-copy-2">
+              <p className="serif-copy">
+                Creo que el derecho puede ser riguroso sin perder cercanía. Mi
+                trabajo empieza en la escucha: en entender qué te preocupa, qué
+                necesitás y qué alternativas existen.
+              </p>
+              <br />
+              <p className="serif-copy">
+                Foja Cero nace para ofrecer un acompañamiento atento, claro y
+                personalizado. Sin fórmulas, sin promesas vacías: con
+                información para que puedas tomar decisiones con tranquilidad.
+              </p>
+            </div>
+            <a href="#formadetrabajo" className="inline-link">
               Conocé mi forma de trabajar <ArrowUpRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
-      <section id="formación" className="timeline-section section-pad">
+      <section id="formacion" className="timeline-section section-pad">
         <div className="section-label">
           02 <span>Formación y trayectoria</span>
         </div>
@@ -207,10 +263,12 @@ export default function Page() {
           <h2>
             Un recorrido en <em>construcción.</em>
           </h2>
-          <p>
-            La formación es un camino que se transforma con cada experiencia.
-              Estos datos son editables y están listos para completar.
-          </p>
+          <div className="serif-copy-">
+            <p /* className="serif-copy-3" */>
+              La formación es un camino que se transforma con cada experiencia.
+              {/* Estos datos son editables y están listos para completar. */}
+            </p>
+          </div>
         </div>
         <div className="timeline">
           {timeline.map((item, index) => (
@@ -232,7 +290,6 @@ export default function Page() {
           </span>
         </div> */}
       </section>
-
       <section
         id="especialidades"
         className="specialties section-pad section-paper"
@@ -263,7 +320,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="process section-pad">
+      <section id="formadetrabajo" className="process section-pad">
         <div className="section-label">
           04 <span>Forma de trabajo</span>
         </div>
@@ -278,7 +335,7 @@ export default function Page() {
             sepas dónde estás y hacia dónde podés ir.
           </p>
         </div>
-       {/*  <div className="process-list">
+        {/*  <div className="process-list">
           {[
             "Primera consulta",
             "Evaluación del caso",
@@ -314,28 +371,45 @@ export default function Page() {
               description:
                 "Durante todo el proceso vas a recibir información clara sobre el avance del caso y los pasos siguientes. También podrás realizar las consultas que necesites en cada etapa.",
             },
-          ].map((step, index) => (
-            <details className="process-item" key={step.title}>
-              <summary className="process-step">
-                <span>{String(index + 1).padStart(2, "0")}</span>
+          ].map((step, index) => {
+            const isOpen = openIndex === index;
 
-                <h3>{step.title}</h3>
+            return (
+              <div
+                className={`process-item ${isOpen ? "is-open" : ""}`}
+                key={step.title}
+              >
+                <button
+                  type="button"
+                  className="process-step"
+                  onClick={() =>
+                    setOpenIndex((current) =>
+                      current === index ? null : index,
+                    )
+                  }
+                  aria-expanded={isOpen}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{step.title}</h3>
+                  <ChevronDown
+                    className="process-arrow"
+                    size={18}
+                    aria-hidden="true"
+                  />
+                </button>
 
-                <ChevronDown
-                  className="process-arrow"
-                  size={18}
-                  aria-hidden="true"
-                />
-              </summary>
-
-              <p className="process-description">{step.description}</p>
-            </details>
-          ))}
+                <div className="process-content" aria-hidden={!isOpen}>
+                  <div className="process-content-inner">
+                    <p className="process-description">{step.description}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-         
       </section>
 
-      <section id= "Hablemos" className="contact section-pad section-dark">
+      <section id="hablemos" className="contact section-pad section-dark">
         <div className="section-label light-label">
           05 <span>Contacto</span>
         </div>
@@ -352,8 +426,10 @@ export default function Page() {
             <p>
               {/* Contame brevemente qué necesitás. Voy a leer tu mensaje y
               responderte para coordinar un primer encuentro. */}
-              Contame brevemente en qué puedo ayudarte. Voy a leer tu mensaje y responderte para que coordinemos un primer encuentro. <br />
-              El horario de atención es de lunes a viernes, de 8:00 a 13:00 y de 16:30 a 20:00; y los sábados, de 9:00 a 13:00.
+              Contame brevemente en qué puedo ayudarte. Voy a leer tu mensaje y
+              responderte para que coordinemos un primer encuentro. <br />
+              El horario de atención es de lunes a viernes, de 8:00 a 13:00 y de
+              16:30 a 20:00; y los sábados, de 9:00 a 13:00.
             </p>
             <div className="contact-details">
               {/* <a href={`mailto:${profile.email}`}>{profile.email}</a> */}
@@ -429,7 +505,6 @@ export default function Page() {
       </section>
 
       <footer className="footer">
-       
         <div className="footer-brand">
           <span className="brand-mark">F</span>
           <span>Foja Cero</span>
@@ -440,25 +515,20 @@ export default function Page() {
           Abogada {/* · {profile.city} */}
         </p>
         <p className="footer-legal">
-            Matrícula profesional: Abogado: T° XII F° 26, 
-            Procurador: T° VII F° 40.
+          Matrícula profesional: Abogado: T° XII F° 26, Procurador: T° VII F°
+          40.
         </p>
         <p className="footer-legal">
-            {profile.city}
-        {/* <div className="footer-links">
+          {profile.city}
+          {/* <div className="footer-links">
           <a href={`mailto:${profile.email}`}>{profile.email}</a>
           <a href="https://www.instagram.com/fojacero.sj/">Instagram ↗</a>
           <a href="#">LinkedIn ↗</a>
         </div> */}
-            <br />© 2026 Foja Cero
+          <br />© 2026 Foja Cero
         </p>
-        <div>
-        </div>
-
-
-        
+        <div></div>
       </footer>
-          
     </main>
   );
 }
