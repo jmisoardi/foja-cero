@@ -108,7 +108,10 @@ const specialties = [
 
 export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [contactStatus, setContactStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [contactError, setContactError] = useState("");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const navItems = [
@@ -128,6 +131,51 @@ export default function Page() {
     event.preventDefault();
     closeMenu();
     smoothScrollTo(href);
+  };
+
+  const handleContactSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+    setContactStatus("submitting");
+    setContactError("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          message: formData.get("message"),
+          website: formData.get("website"),
+        }),
+      });
+
+      const result = (await response.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+
+      if (!response.ok) {
+        throw new Error(
+          result?.error || "No se pudo enviar la consulta. Intentá más tarde.",
+        );
+      }
+
+      form.reset();
+      setContactStatus("success");
+    } catch (error) {
+      setContactError(
+        error instanceof Error
+          ? error.message
+          : "No se pudo enviar la consulta. Intentá más tarde.",
+      );
+      setContactStatus("error");
+    }
   };
 
   return (
@@ -440,13 +488,10 @@ export default function Page() {
           </div>
           <form
             className="contact-form"
-            onSubmit={(event) => {
-              event.preventDefault();
-              setSent(true);
-            }}
+            onSubmit={handleContactSubmit}
             aria-label="Formulario de consulta"
           >
-            {sent ? (
+            {contactStatus === "success" ? (
               <div className="success-state">
                 <span className="success-icon">
                   <Check size={22} />
@@ -456,7 +501,7 @@ export default function Page() {
                 <button
                   type="button"
                   className="button button-outline"
-                  onClick={() => setSent(false)}
+                  onClick={() => setContactStatus("idle")}
                 >
                   Enviar otra consulta
                 </button>
@@ -465,7 +510,13 @@ export default function Page() {
               <>
                 <label>
                   Nombre y apellido
-                  <input required name="name" placeholder="¿Cómo te llamás?" />
+                  <input
+                    required
+                    name="name"
+                    autoComplete="name"
+                    maxLength={100}
+                    placeholder="¿Cómo te llamás?"
+                  />
                 </label>
                 <div className="form-row">
                   <label>
@@ -474,12 +525,20 @@ export default function Page() {
                       required
                       type="email"
                       name="email"
+                      autoComplete="email"
+                      maxLength={254}
                       placeholder="tu@email.com"
                     />
                   </label>
                   <label>
                     Teléfono
-                    <input name="phone" placeholder="Tu teléfono" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      autoComplete="tel"
+                      maxLength={40}
+                      placeholder="Tu teléfono"
+                    />
                   </label>
                 </div>
                 <label>
@@ -488,11 +547,33 @@ export default function Page() {
                     required
                     name="message"
                     rows={4}
+                    minLength={10}
+                    maxLength={4000}
                     placeholder="¿En qué puedo ayudarte?"
                   />
                 </label>
-                <button className="button button-copper" type="submit">
-                  Enviar consulta <ArrowUpRight size={17} />
+                <label aria-hidden="true" style={{ display: "none" }}>
+                  Sitio web
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </label>
+                {contactStatus === "error" && (
+                  <p className="form-note" role="alert">
+                    {contactError}
+                  </p>
+                )}
+                <button
+                  className="button button-copper"
+                  type="submit"
+                  disabled={contactStatus === "submitting"}
+                >
+                  {contactStatus === "submitting"
+                    ? "Enviando consulta..."
+                    : "Enviar consulta"} <ArrowUpRight size={17} />
                 </button>
                 <p className="form-note">
                   Al enviar esta consulta, acepto que Foja Cero utilice mis
