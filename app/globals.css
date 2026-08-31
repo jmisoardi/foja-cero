@@ -618,6 +618,68 @@ em {
   font-size: 10px;
   margin-top: 18px;
 }
+.consent-modal-overlay {
+  align-items: center;
+  background: rgba(7, 19, 27, 0.72);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: fixed;
+  z-index: 50;
+}
+.consent-modal {
+  background: var(--night);
+  border: 1px solid #405461;
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.35);
+  color: var(--background);
+  max-width: 560px;
+  padding: clamp(30px, 5vw, 48px);
+  width: 100%;
+}
+.consent-modal-eyebrow {
+  color: var(--copper-light);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  margin: 0 0 20px;
+  text-transform: uppercase;
+}
+.consent-modal h2 {
+  font-family: var(--font-serif-local), Georgia, serif;
+  font-size: clamp(30px, 5vw, 42px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin: 0 0 24px;
+}
+.consent-modal p:not(.consent-modal-eyebrow) {
+  color: #aebbc0;
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+.consent-modal-actions {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+.consent-modal-cancel {
+  background: transparent;
+  border-color: #405461;
+  color: #aebbc0;
+}
+.consent-modal-cancel:hover {
+  border-color: var(--copper-light);
+  color: var(--background);
+}
+.consent-modal-confirm {
+  margin-top: 0;
+}
+.consent-modal button:focus-visible {
+  outline: 2px solid var(--copper-light);
+  outline-offset: 3px;
+}
 .loading-state {
   align-items: center;
   display: flex;
@@ -857,6 +919,13 @@ em {
   }
   .contact-grid {
     gap: 58px;
+  }
+  .consent-modal-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+  .consent-modal-actions .button {
+    width: 100%;
   }
   .footer {
     grid-template-columns: 1fr 1fr;

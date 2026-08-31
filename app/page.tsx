@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, ChevronDown, Menu, X } from "lucide-react";
 import { FieldDescription } from "@base-ui/react";
 
@@ -112,7 +112,13 @@ export default function Page() {
     "idle" | "submitting" | "success" | "error"
   >("idle");
   const [contactError, setContactError] = useState("");
+  const [isConsentModalOpen, setIsConsentModalOpen] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const contactFormRef = useRef<HTMLFormElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const cancelConsentButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
+  const isContactSubmittingRef = useRef(false);
 
   const navItems = [
     { label: "Sobre mí", href: "#sobre-mi" },
@@ -133,14 +139,25 @@ export default function Page() {
     smoothScrollTo(href);
   };
 
-  const handleContactSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (!isConsentModalOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    cancelConsentButtonRef.current?.focus();
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isConsentModalOpen]);
+
+  const submitContactForm = async (form: HTMLFormElement) => {
+    if (isContactSubmittingRef.current) return;
+
+    isContactSubmittingRef.current = true;
     setContactStatus("submitting");
     setContactError("");
 
-    const form = event.currentTarget;
     const formData = new FormData(form);
 
     try {
@@ -175,7 +192,77 @@ export default function Page() {
           : "No se pudo enviar la consulta. Intentá más tarde.",
       );
       setContactStatus("error");
+    } finally {
+      isContactSubmittingRef.current = false;
     }
+  };
+
+  const handleContactSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    if (isContactSubmittingRef.current) return;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    previouslyFocusedElementRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    setIsConsentModalOpen(true);
+  };
+
+  const closeConsentModal = () => {
+    setIsConsentModalOpen(false);
+    requestAnimationFrame(() => {
+      const previousElement = previouslyFocusedElementRef.current;
+      if (previousElement?.isConnected) {
+        previousElement.focus();
+      } else {
+        submitButtonRef.current?.focus();
+      }
+    });
+  };
+
+  const handleConsentKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeConsentModal();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusableElements = event.currentTarget.querySelectorAll<HTMLElement>(
+      "button:not(:disabled)",
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (!firstElement || !lastElement) return;
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  };
+
+  const confirmConsentAndSubmit = () => {
+    const form = contactFormRef.current;
+    if (!form || isContactSubmittingRef.current) return;
+
+    setIsConsentModalOpen(false);
+    void submitContactForm(form);
   };
 
   return (
@@ -486,7 +573,9 @@ export default function Page() {
               <span>{profile.city}</span>
             </div>
           </div>
+          
           <form
+            ref={contactFormRef}
             className="contact-form"
             onSubmit={handleContactSubmit}
             aria-label="Formulario de consulta"
@@ -576,20 +665,64 @@ export default function Page() {
                   </p>
                 )}
                 <button
+                  ref={submitButtonRef}
                   className="button button-copper"
                   type="submit"
                 >
                   Enviar consulta <ArrowUpRight size={17} />
                 </button>
                 <p className="form-note">
-                  Al enviar esta consulta, acepto que Foja Cero utilice mis
-                  datos para responderme.
+                  Tus datos serán utilizados únicamente para gestionar tu
+                  consulta.
                 </p>
               </>
             )}
           </form>
         </div>
       </section>
+      
+      {/* Consentimiento de Consulta, politicas del estudio */}
+
+      {isConsentModalOpen && (
+        <div className="consent-modal-overlay">
+          <div
+            className="consent-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="consent-modal-title"
+            aria-describedby="consent-modal-description"
+            onKeyDown={handleConsentKeyDown}
+          >
+            <p className="consent-modal-eyebrow">Foja Cero</p>
+            <h2 id="consent-modal-title">Antes de enviar tu consulta</h2>
+            <p id="consent-modal-description">
+              Para poder responderte, Foja Cero necesita utilizar los datos
+              personales que proporcionaste en este formulario.
+            </p>
+            <p>
+              Al continuar, confirmás que leíste y aceptás el tratamiento de
+              tus datos para gestionar y responder esta consulta.
+            </p>
+            <div className="consent-modal-actions">
+              <button
+                ref={cancelConsentButtonRef}
+                className="button consent-modal-cancel"
+                type="button"
+                onClick={closeConsentModal}
+              >
+                Cancelar
+              </button>
+              <button
+                className="button button-copper consent-modal-confirm"
+                type="button"
+                onClick={confirmConsentAndSubmit}
+              >
+                Aceptar y enviar <ArrowUpRight size={17} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className="footer">
         <div className="footer-brand">
