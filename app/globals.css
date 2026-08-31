@@ -618,6 +618,62 @@ em {
   font-size: 10px;
   margin-top: 18px;
 }
+.loading-state {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 390px;
+  text-align: center;
+}
+.loading-state p {
+  color: #aebbc0;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  margin: 18px 0 0;
+  text-transform: uppercase;
+}
+.loader {
+  --color-1: #fff;
+  --color-2: var(--copper);
+  --size: 1.5px;
+
+  box-sizing: border-box;
+  display: block;
+  height: calc(48 * var(--size));
+  position: relative;
+  width: calc(48 * var(--size));
+}
+.loader::before,
+.loader::after {
+  border-radius: calc(2 * var(--size));
+  box-sizing: border-box;
+  content: "";
+  height: calc(4 * var(--size));
+  left: 50%;
+  margin: calc(-2 * var(--size)) 0 0 calc(-24 * var(--size));
+  position: absolute;
+  top: 50%;
+  width: calc(48 * var(--size));
+}
+.loader::before {
+  animation: loader-cw 1.4s linear infinite;
+  background: var(--color-1);
+}
+.loader::after {
+  animation: loader-ccw 1.4s linear infinite;
+  background: var(--color-2);
+}
+@keyframes loader-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
 .success-state {
   padding: 75px 0;
   text-align: center;

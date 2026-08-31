@@ -506,6 +506,15 @@ export default function Page() {
                   Enviar otra consulta
                 </button>
               </div>
+            ) : contactStatus === "submitting" ? (
+              <div
+                className="loading-state"
+                role="status"
+                aria-live="polite"
+              >
+                <span className="loader" aria-hidden="true" />
+                <p>Enviando consulta…</p>
+              </div>
             ) : (
               <>
                 <label>
@@ -569,11 +578,8 @@ export default function Page() {
                 <button
                   className="button button-copper"
                   type="submit"
-                  disabled={contactStatus === "submitting"}
                 >
-                  {contactStatus === "submitting"
-                    ? "Enviando consulta..."
-                    : "Enviar consulta"} <ArrowUpRight size={17} />
+                  Enviar consulta <ArrowUpRight size={17} />
                 </button>
                 <p className="form-note">
                   Al enviar esta consulta, acepto que Foja Cero utilice mis
