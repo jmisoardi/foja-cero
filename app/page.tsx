@@ -52,19 +52,24 @@ const profile = {
 
 const timeline = [
   {
-    year: "2018",
-    title: "Abogacía",
-    detail: "Completar universidad y título de grado.",
+    year: "2017",
+    title: "Procuradora",
+    detail: "Procuradora: T° VII F°40.",
   },
   {
-    year: "2018",
+    year: "2019",
+    title: "Abogada",
+    detail: "Seis años en ejercicio independiente. \nAbogada: T° XII F° 26.",
+  },
+  {
+    year: "2021",
     title: "Especialización",
-    detail: "Agregar posgrado o especialización.",
+    detail: "Esp. en Control y Adm. Pública. \nLey Micaela",
   },
   {
     year: "2018",
     title: "Experiencia profesional",
-    detail: "Agregar estudio, equipo o práctica profesional.",
+    detail: "Escribanía 2 años\n.",
   },
   {
     year: "Actualidad",
@@ -125,7 +130,7 @@ export default function Page() {
     { label: "Formación", href: "#formacion" },
     { label: "Especialidades", href: "#especialidades" },
     { label: "Forma de Trabajo", href: "#formadetrabajo" },
-    { label: "Hablemos", href: "#hablemos" },
+    { label: "Consulta", href: "#consulta" },
   ];
 
   const closeMenu = () => setMenuOpen(false);
@@ -323,7 +328,7 @@ export default function Page() {
             <a href="#formacion" className="button button-primary">
               Conocé mi trayectoria <ArrowUpRight size={17} />
             </a>
-            <a href="#hablemos" className="button button-text">
+            <a href="#consulta" className="button button-text">
               Realizar una consulta <span>→</span>
             </a>
           </div>
@@ -413,7 +418,8 @@ export default function Page() {
               <div className="timeline-content">
                 <span className="timeline-index">0{index + 1}</span>
                 <h3>{item.title}</h3>
-                <p>{item.detail}</p>
+                <p className="whitespace-pre-line">{item.detail}</p>
+                {/* <p>{item.detail}</p> */}
               </div>
             </div>
           ))}
@@ -544,7 +550,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="hablemos" className="contact section-pad section-dark">
+      <section id="consulta" className="contact section-pad section-dark">
         <div className="section-label light-label">
           05 <span>Contacto</span>
         </div>
@@ -735,7 +741,7 @@ export default function Page() {
           Abogada {/* · {profile.city} */}
         </p>
         <p className="footer-legal">
-          Matrícula profesional: Abogado: T° XII F° 26, Procurador: T° VII F°
+          Matrícula profesional: Abogada: T° XII F° 26, Procuradora: T° VII F°
           40.
         </p>
         <p className="footer-legal">
