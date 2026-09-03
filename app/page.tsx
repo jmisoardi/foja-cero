@@ -69,7 +69,7 @@ const timeline = [
   {
     year: "2018",
     title: "Experiencia profesional",
-    detail: "Escribanía 2 años\n.",
+    detail: "Escribanía 2 años\n. Tareas de Procuración en estudios juridicos \n Dir. Prov. de Vialidad de La Pampa",
   },
   {
     year: "Actualidad",
