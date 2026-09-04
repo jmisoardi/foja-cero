@@ -618,6 +618,34 @@ em {
   font-size: 10px;
   margin-top: 18px;
 }
+.form-error {
+  background: rgba(183, 80, 66, 0.16);
+  border-left: 3px solid #dc7769;
+  color: #ffe2dc;
+  margin-top: 24px;
+  padding: 18px 20px;
+}
+.form-error p {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+.form-error-title {
+  color: #fff4f1;
+  font-size: 15px !important;
+  font-weight: 700;
+  margin-bottom: 5px !important;
+}
+.form-error-retry {
+  background: transparent;
+  border-color: #ffe2dc;
+  color: #fff4f1;
+  margin-top: 16px;
+}
+.form-error-retry:hover {
+  background: #ffe2dc;
+  color: var(--night);
+}
 .consent-modal-overlay {
   align-items: center;
   background: rgba(7, 19, 27, 0.72);

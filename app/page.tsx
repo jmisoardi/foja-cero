@@ -39,7 +39,7 @@ const smoothScrollTo = (targetId: string) => {
 };
 
 const profile = {
-  name: "Yamila Lujan Isoardi",
+  name: "Yamila Luján Isoardi",
   role: "Abogada",
   city: "Victorica, La Pampa, Argentina",
   /* email: "hola@fojacero.com.ar", */
@@ -54,27 +54,27 @@ const timeline = [
   {
     year: "2017",
     title: "Procuradora",
-    detail: "Procuradora: T° VII F°40.",
+    detail: "-Procuradora: T° VII F°40.",
   },
   {
     year: "2019",
     title: "Abogada",
-    detail: "Seis años en ejercicio independiente. \nAbogada: T° XII F° 26.",
+    detail: "-Seis años en ejercicio independiente. \n-Abogada: T° XII F° 26.",
   },
   {
     year: "2021",
     title: "Especialización",
-    detail: "Esp. en Control y Adm. Pública. \nLey Micaela",
+    detail: "-Esp. en Control y Adm. Pública. \n-Ley Micaela.",
   },
   {
-    year: "2018",
+    year: "2023",
     title: "Experiencia profesional",
-    detail: "Escribanía 2 años\n. Tareas de Procuración en estudios juridicos \n Dir. Prov. de Vialidad de La Pampa",
+    detail: "-Escribanía 2 años.\n-Tareas de Procuración en estudios juridicos. \n-Dir. Prov. de Vialidad de La Pampa. \n-2 años | Área de Contravenciones y Apremios.",
   },
   {
     year: "Actualidad",
     title: "Foja Cero",
-    detail: "Atención personalizada y acompañamiento jurídico.",
+    detail: "-Atención personalizada y acompañamiento jurídico.\n-Asesoramiento integral a Municipalidades de La Pampa.",
   },
 ];
 
@@ -111,6 +111,14 @@ const specialties = [
   ],
 ];
 
+type ContactPayload = {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  website: string;
+};
+
 export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactStatus, setContactStatus] = useState<
@@ -124,6 +132,7 @@ export default function Page() {
   const cancelConsentButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
   const isContactSubmittingRef = useRef(false);
+  const lastContactPayloadRef = useRef<ContactPayload | null>(null);
 
   const navItems = [
     { label: "Sobre mí", href: "#sobre-mi" },
@@ -156,26 +165,34 @@ export default function Page() {
     };
   }, [isConsentModalOpen]);
 
-  const submitContactForm = async (form: HTMLFormElement) => {
+  const getContactPayload = (form: HTMLFormElement): ContactPayload => {
+    const formData = new FormData(form);
+
+    return {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
+      message: String(formData.get("message") ?? ""),
+      website: String(formData.get("website") ?? ""),
+    };
+  };
+
+  const submitContactForm = async (
+    form: HTMLFormElement,
+    payload = getContactPayload(form),
+  ) => {
     if (isContactSubmittingRef.current) return;
 
     isContactSubmittingRef.current = true;
+    lastContactPayloadRef.current = payload;
     setContactStatus("submitting");
     setContactError("");
-
-    const formData = new FormData(form);
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.get("name"),
-          email: formData.get("email"),
-          phone: formData.get("phone"),
-          message: formData.get("message"),
-          website: formData.get("website"),
-        }),
+        body: JSON.stringify(payload),
       });
 
       const result = (await response.json().catch(() => null)) as {
@@ -189,6 +206,7 @@ export default function Page() {
       }
 
       form.reset();
+      lastContactPayloadRef.current = null;
       setContactStatus("success");
     } catch (error) {
       setContactError(
@@ -267,6 +285,15 @@ export default function Page() {
     if (!form || isContactSubmittingRef.current) return;
 
     setIsConsentModalOpen(false);
+    void submitContactForm(form);
+  };
+
+  const retryContactSubmit = () => {
+    const form = contactFormRef.current;
+    const payload = lastContactPayloadRef.current;
+
+    if (!form || !payload || isContactSubmittingRef.current) return;
+
     void submitContactForm(form);
   };
 
@@ -619,6 +646,7 @@ export default function Page() {
                     name="name"
                     autoComplete="name"
                     maxLength={100}
+                    defaultValue={lastContactPayloadRef.current?.name ?? ""}
                     placeholder="¿Cómo te llamás?"
                   />
                 </label>
@@ -631,6 +659,7 @@ export default function Page() {
                       name="email"
                       autoComplete="email"
                       maxLength={254}
+                      defaultValue={lastContactPayloadRef.current?.email ?? ""}
                       placeholder="tu@email.com"
                     />
                   </label>
@@ -641,6 +670,7 @@ export default function Page() {
                       name="phone"
                       autoComplete="tel"
                       maxLength={40}
+                      defaultValue={lastContactPayloadRef.current?.phone ?? ""}
                       placeholder="Tu teléfono"
                     />
                   </label>
@@ -653,6 +683,7 @@ export default function Page() {
                     rows={4}
                     minLength={10}
                     maxLength={4000}
+                    defaultValue={lastContactPayloadRef.current?.message ?? ""}
                     placeholder="¿En qué puedo ayudarte?"
                   />
                 </label>
@@ -663,12 +694,23 @@ export default function Page() {
                     name="website"
                     tabIndex={-1}
                     autoComplete="off"
+                    defaultValue={lastContactPayloadRef.current?.website ?? ""}
                   />
                 </label>
                 {contactStatus === "error" && (
-                  <p className="form-note" role="alert">
-                    {contactError}
-                  </p>
+                  <div className="form-error" role="alert" aria-live="assertive">
+                    <p className="form-error-title">
+                      No pudimos enviar tu consulta.
+                    </p>
+                    <p>{contactError}</p>
+                    <button
+                      className="button form-error-retry"
+                      type="button"
+                      onClick={retryContactSubmit}
+                    >
+                      Reintentar envío <ArrowUpRight size={17} />
+                    </button>
+                  </div>
                 )}
                 <button
                   ref={submitButtonRef}
