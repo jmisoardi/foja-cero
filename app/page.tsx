@@ -753,6 +753,10 @@ export default function Page() {
               Al continuar, confirmás que leíste y aceptás el tratamiento de
               tus datos para gestionar y responder esta consulta.
             </p>
+            <p className="consent-modal-review">
+              Antes de continuar, revisá que tu correo electrónico y tu
+              teléfono estén correctos para que Foja Cero pueda responderte.
+            </p>
             <div className="consent-modal-actions">
               <button
                 ref={cancelConsentButtonRef}
