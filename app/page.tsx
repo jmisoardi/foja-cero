@@ -70,7 +70,8 @@ const timeline = [
   {
     year: "2023",
     title: "Experiencia profesional",
-    detail: "-Escribanía 2 años.\n-Tareas de Procuración en estudios juridicos. \n-Dir. Prov. de Vialidad de La Pampa. \n-2 años | Área de Contravenciones y Apremios.",
+    detail: "Cuento con más de 10 años de trayectoria en el ámbito jurídico y administrativo, con experiencia en escribanía, procuración, contravenciones, apremios y organismos públicos.", 
+    /* "-Escribanía 2 años.\n-Tareas de Procuración en estudios juridicos. \n-Dir. Prov. de Vialidad de La Pampa. \n-2 años | Área de Contravenciones y Apremios.", */
   },
   {
     year: "Actualidad",
@@ -784,17 +785,19 @@ export default function Page() {
           Abogada {/* · {profile.city} */}
         </p>
         <p className="footer-legal">
+          {profile.city} <br />
           Matrícula profesional: Abogada: T° XII F° 26, Procuradora: T° VII F°
           40.
         </p>
         <p className="footer-legal">
-          {profile.city}
+          {/* {profile.city} */}
           {/* <div className="footer-links">
           <a href={`mailto:${profile.email}`}>{profile.email}</a>
           <a href="https://www.instagram.com/fojacero.sj/">Instagram ↗</a>
           <a href="#">LinkedIn ↗</a>
-        </div> */}
-          <br />© 2026 Foja Cero
+          </div> */}
+          <br /> 2026 Foja Cero
+          <br />© Desarrollo: Jair Isoardi.  
         </p>
         <div></div>
       </footer>
