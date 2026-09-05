@@ -45,7 +45,8 @@ const profile = {
   /* email: "hola@fojacero.com.ar", */
   /* phone: "+54 9 351 000 0000", */
   image:
-    "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=85",
+    "/Yami-2048-IMG_1409.jpg",
+    /* "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=85", */
   portrait:
     "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&w=1000&q=85",
 };
@@ -59,7 +60,7 @@ const timeline = [
   {
     year: "2019",
     title: "Abogada",
-    detail: "-Seis años en ejercicio independiente. \n-Abogada: T° XII F° 26.",
+    detail:"-Abogada: T° XII F° 26.",
   },
   {
     year: "2021",

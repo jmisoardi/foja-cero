@@ -206,10 +206,11 @@ em {
 .hero-image-wrap {
   position: relative;
 }
+/* Ajustes de imagen de portada */
 .hero-image {
-  aspect-ratio: 0.82;
+  aspect-ratio: 0.87;
   display: block;
-  filter: saturate(0.72);
+  filter: saturate(0.79);
   object-fit: cover;
   width: 100%;
 }
