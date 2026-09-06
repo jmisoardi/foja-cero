@@ -8,7 +8,7 @@ const sans = DM_Sans({ subsets: ['latin'], variable: '--font-sans-local', weight
 
 export const metadata: Metadata = {
   title: 'Foja Cero · Estudio jurídico',
-  description: 'El derecho, con otra mirada. Presentación profesional de Foja Cero.',
+  description: 'Foja Cero | Yamila Luján Isoardi, abogada. Asesoramiento jurídico. Conocé su formación, especialidades y solicitá una consulta.',
 }
 
 export const viewport: Viewport = {
