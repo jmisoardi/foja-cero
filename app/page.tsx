@@ -74,7 +74,7 @@ const timeline = [
     /* "-Escribanía 2 años.\n-Tareas de Procuración en estudios juridicos. \n-Dir. Prov. de Vialidad de La Pampa. \n-2 años | Área de Contravenciones y Apremios.", */
   },
   {
-    year: "Actualidad",
+    year: "Act.",
     title: "Foja Cero",
     detail: "-Atención personalizada y acompañamiento jurídico.\n-Asesoramiento integral a Municipalidades de La Pampa.",
   },
