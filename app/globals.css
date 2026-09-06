@@ -966,7 +966,10 @@ em {
     margin-top: 30px;
   }
   .timeline-item {
-    grid-template-columns: 70px 20px 1fr;
+    grid-template-columns: 90px 18px minmax(0, 1fr);
+  }
+  .timeline-year {
+    white-space: nowrap;
   }
   .timeline-content {
     padding-left: 18px;
@@ -1026,7 +1029,7 @@ em {
     gap: 15px;
   }
   .timeline-item {
-    grid-template-columns: 56px 16px 1fr;
+    grid-template-columns: 82px 18px minmax(0, 1fr);
   }
   .timeline-content {
     padding-left: 14px;
