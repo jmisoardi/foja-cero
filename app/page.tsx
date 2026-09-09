@@ -77,7 +77,7 @@ const timeline = [
   {
     year: "Act.",
     title: "Foja Cero",
-    detail: "Asistencia jurídica estratégica y personalizada de acuerdo a tus necesidades. Mi compromiso se basa en dos pilares innegociables: la confianza mutua y la máxima eficiencia en cada caso.",
+    detail: "-Asistencia jurídica estratégica y personalizada de acuerdo a tus necesidades. \n-Mi compromiso se basa en dos pilares innegociables: la confianza mutua y la máxima eficiencia en cada caso.",
     /* "-Atención personalizada y acompañamiento jurídico.\n-Asesoramiento integral a Municipalidades de La Pampa.", */
   },
 ];
@@ -378,7 +378,7 @@ export default function Page() {
             <span>Desde 2018</span>
           </div>
           <div className="hero-stamp">
-            FC<span>°</span>
+            FC<span></span>
           </div>
         </div>
       </section>
