@@ -70,13 +70,15 @@ const timeline = [
   {
     year: "2023",
     title: "Experiencia profesional",
-    detail: "Cuento con más de 10 años de trayectoria en el ámbito jurídico y administrativo, con experiencia en escribanía, procuración, contravenciones, apremios y organismos públicos.", 
+    detail: "-Más de una década de trayectoria defendiendo y asesorando los derechos e intereses de los clientes en el ámbito judicial y extrajudicial.", 
+    /* "Cuento con más de 10 años de trayectoria en el ámbito jurídico y administrativo, con experiencia en escribanía, procuración, contravenciones, apremios y organismos públicos." */
     /* "-Escribanía 2 años.\n-Tareas de Procuración en estudios juridicos. \n-Dir. Prov. de Vialidad de La Pampa. \n-2 años | Área de Contravenciones y Apremios.", */
   },
   {
     year: "Act.",
     title: "Foja Cero",
-    detail: "-Atención personalizada y acompañamiento jurídico.\n-Asesoramiento integral a Municipalidades de La Pampa.",
+    detail: "Asistencia jurídica estratégica y personalizada de acuerdo a tus necesidades. Mi compromiso se basa en dos pilares innegociables: la confianza mutua y la máxima eficiencia en cada caso.",
+    /* "-Atención personalizada y acompañamiento jurídico.\n-Asesoramiento integral a Municipalidades de La Pampa.", */
   },
 ];
 
