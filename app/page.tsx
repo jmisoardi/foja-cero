@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Check, ChevronDown, Menu, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  ChevronDown,
+  Menu,
+  X,
+} from "lucide-react";
 import { FieldDescription } from "@base-ui/react";
 
 const SCROLL_DURATION_MS = 350;
@@ -785,23 +791,48 @@ export default function Page() {
           <span className="brand-mark">F</span>
           <span>Foja Cero</span>
         </div>
-        <p>
-          {profile.name}
-          <br />
-          Abogada {/* · {profile.city} */}
-        </p>
+        <div className="footer-contact">
+          <p>
+            {profile.name}
+            <br />
+            Abogada {/* · {profile.city} */}
+          </p>
+          <a
+            className="footer-instagram"
+            href="https://www.instagram.com/fojacero.sj/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <svg
+              aria-hidden="true"
+              className="instagram-icon"
+              fill="none"
+              focusable="false"
+              height="16"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <rect height="20" rx="5" width="20" x="2" y="2" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" fill="currentColor" r="1" stroke="none" />
+            </svg>
+            <span>fojacero.sj</span>
+          </a>
+        </div>
         <p className="footer-legal">
           {profile.city} <br />
           Matrícula profesional: Abogada: T° XII F° 26, Procuradora: T° VII F°
           40.
         </p>
+        {/* <p>Tambien podes encontrarme en: <a href="https://www.instagram.com/fojacero.sj/">Instagram ↗</a></p> */}
         <p className="footer-legal">
           {/* {profile.city} */}
+          {/* <a href="https://www.instagram.com/fojacero.sj/">Instagram ↗</a> */}
           {/* <div className="footer-links">
           <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <a href="https://www.instagram.com/fojacero.sj/">Instagram ↗</a>
           <a href="#">LinkedIn ↗</a>
           </div> */}
+          
           <br /> 2026 Foja Cero
           <br />© Desarrollo: Jair Isoardi.  
         </p>

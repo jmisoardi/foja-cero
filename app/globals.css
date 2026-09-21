@@ -811,6 +811,28 @@ em {
   font-size: 11px;
   margin: 0;
 }
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-instagram {
+  align-items: center;
+  color: var(--muted);
+  display: inline-flex;
+  font-size: 11px;
+  gap: 7px;
+  width: fit-content;
+}
+.footer-instagram:hover,
+.footer-instagram:focus-visible {
+  color: var(--copper);
+}
+.instagram-icon {
+  flex: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
 .footer-links {
   display: flex;
   flex-direction: column;
@@ -916,8 +938,7 @@ em {
     aspect-ratio: 0.85;
   }
   .hero-stamp {
-    right: 12px;
-    top: 20px;
+    display: none;
   }
   .hero-location {
     margin-top: 36px;
